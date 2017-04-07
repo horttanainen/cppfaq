@@ -1,6 +1,7 @@
 #include <iterator>
 #include <iostream>
 #include <forward_list>
+#include <algorithm>
 
 namespace cppfaq
 {
@@ -22,18 +23,25 @@ namespace cppfaq
 	//		*(first++) = storedValues[i];
 	//	}
 	//}
+    //
 
 	template<class ForwardIterator>
-	void reverseImpl(ForwardIterator first, ForwardIterator last, std::forward_iterator_tag)
+    void reverseImpl(ForwardIterator first, ForwardIterator last, std::forward_iterator_tag)
 	{
+        auto distance = std::distance(first, last);
+        if (distance < 2)
+        {
+            return;
+        }
 		auto middle = first;
-		std::advance(middle, std::distance(first, last) / 2);
-
-		std::rotate(first, middle, last);
+		std::advance(middle, distance / 2);
+        cppfaq::reverse(first, middle);
+        cppfaq::reverse(middle, last);
+        std::rotate(first, middle, last);
 	}
 
 	template<class ForwardIterator>
-	void reverse(ForwardIterator first, ForwardIterator last)
+    void reverse(ForwardIterator first, ForwardIterator last)
 	{
 		using category = std::iterator_traits<ForwardIterator>::iterator_category;
 		reverseImpl(first, last, category());
