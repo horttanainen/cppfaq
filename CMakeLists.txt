@@ -20,3 +20,8 @@ add_executable(
     q_4_swapping_unequal_sections
     q4.cpp
     )
+
+add_executable(
+    q_7_shifting_back_and_forth
+    q7.cpp
+    )
